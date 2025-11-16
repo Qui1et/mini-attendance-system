@@ -1,0 +1,90 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Mini Attendance System - Attendance API",
+    "version": "1.0.0",
+    "description": "API untuk check-in, check-out, dan report"
+  },
+  "servers": [
+    { "url": "http://localhost:4002" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [{ "bearerAuth": [] }],
+  "paths": {
+    "/attendance/checkin": {
+      "post": {
+        "summary": "Check-in karyawan",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "employeeId": { "type": "integer" } },
+                "required": ["employeeId"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Check-in berhasil" },
+          "400": { "description": "Sudah check-in" },
+          "401": { "description": "Token invalid" }
+        }
+      }
+    },
+    "/attendance/checkout": {
+      "post": {
+        "summary": "Check-out karyawan",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "employeeId": { "type": "integer" } },
+                "required": ["employeeId"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Check-out berhasil" },
+          "400": { "description": "Belum check-in" }
+        }
+      }
+    },
+    "/report/daily": {
+      "get": {
+        "summary": "Lihat laporan harian",
+        "parameters": [
+          { "name": "date", "in": "query", "required": true, "schema": { "type": "string", "format": "date" } }
+        ],
+        "responses": { "200": { "description": "List summary" } }
+      }
+    },
+    "/report/export": {
+      "get": {
+        "summary": "Export CSV",
+        "parameters": [
+          { "name": "date", "in": "query", "required": true, "schema": { "type": "string", "format": "date" } }
+        ],
+        "responses": { "200": { "description": "File CSV" } }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "responses": { "200": { "description": "Healthy" } }
+      }
+    }
+  }
+}

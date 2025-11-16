@@ -1,0 +1,46 @@
+{
+  "info": {
+    "name": "Mini Attendance System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\":\"admin@company.com\",\"password\":\"password123\"}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://localhost:4001/auth/login",
+          "protocol": "http",
+.FontSizehost": "localhost",
+          "port": "4001",
+          "path": ["auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "Check-in",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"employeeId\":1}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://localhost:4002/attendance/checkin",
+          "protocol": "http",
+          "host": "localhost",
+          "port": "4002",
+          "path": ["attendance", "checkin"]
+        }
+      }
+    }
+  ]
+}
